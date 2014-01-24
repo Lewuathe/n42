@@ -1,0 +1,25 @@
+{
+  "name": "n42",
+  "version": "0.0.1",
+  "description" : "Deep learning module for nodejs",
+  "repository" : {
+          "type" : "git",
+          "url"  : "https://github.com/Lewuathe/n42"
+  },
+  "main": "./lib",
+  "scripts": {
+        "test" : "node_modules/vows/bin/vows test/*-test.js --spec"
+  },
+  "dependencies": {
+      "pkginfo": "~0.3.0",
+      "underscore": "~1.5.2",
+      "sylvester": "~0.0.21"
+  },
+  "devDependencies" : {
+      "vows" : "~0.7.0"
+  },
+  "engines" : {
+      "node" : ">=0.10.0",
+      "npm" : "~1.2.21"
+  }
+}
