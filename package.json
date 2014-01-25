@@ -13,7 +13,9 @@
   "dependencies": {
       "pkginfo": "~0.3.0",
       "underscore": "~1.5.2",
-      "sylvester": "~0.0.21"
+      "sylvester": "~0.0.21",
+      "gaussian": "~1.0.0",
+      "box-muller": "~0.0.1"
   },
   "devDependencies" : {
       "vows" : "~0.7.0"
