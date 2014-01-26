@@ -49,6 +49,28 @@ vows.describe('n42 Utils test').addBatch({
                 assert.deepEqual(topic, $V([0.5, 0.5]));
             }
         }
+    },
+
+    'mean function': {
+        'get mean value of axis = 0': {
+            topic: function() {
+                return utils.mean($M([[1.0, 2.0], [3.0, 4.0]]), 0);
+            },
+
+            'shold receive row oriented mean values': function(topic) {
+                assert.deepEqual(topic, $V([2.0, 3.0]));
+            }
+        },
+
+        'get mean value of axis = 1': {
+            topic: function() {
+                return utils.mean($M([[1.0, 2.0], [3.0, 4.0]]), 1);
+            },
+
+            'should receive col oriented mean values': function(topic) {
+                assert.deepEqual(topic, $V([1.5, 3.5]));
+            }
+        }
     }
 
 }).export(module); // Export the Suite
