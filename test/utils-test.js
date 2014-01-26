@@ -71,6 +71,18 @@ vows.describe('n42 Utils test').addBatch({
                 assert.deepEqual(topic, $V([1.5, 3.5]));
             }
         }
+    },
+
+    'plusBias function': {
+        'get plusBias value': {
+            topic: function() {
+                return utils.plusBias($M([[1.0, 1.0], [2.0,2.0]]), $V([1.0, 1.0]));
+            },
+
+            'should receive 2.0 and 3.0 matrix': function(topic) {
+                assert.deepEqual(topic, $V([[2.0, 2.0], [3.0, 3.0]]));
+            }
+        }
     }
 
 }).export(module); // Export the Suite
