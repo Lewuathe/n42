@@ -12,11 +12,10 @@ vows.describe('n42 HiddenLayer module').addBatch({
         'get correct answer': {
             topic: function() {
                 return new HiddenLayer($M([[1.0, 0.0, 1.0], [1.0, 1.0, 0.0], [0.0, 1.0, 1.0]]),
-                                       3, 2,
-                                      $M([[1.0, 1.0],[1.0, 1.0], [1.0, 1.0]]),$V([1.0, 1.0]));
+                                       3, 2, utils.sigmoid);
             },
             
-            'should receive 0.5': function (hiddenLayer) {
+            'should receive not null': function (hiddenLayer) {
                 assert.isNotNull((hiddenLayer.output($M([[1.0, 0.0, 1.0], [1.0, 0.0, 0.0]]))));
             }
         }
