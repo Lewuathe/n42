@@ -49,7 +49,7 @@ vows.describe('n42 Denoised autoencoder test').addBatch({
                     [1.0, 0.0, 0.0],
                     [0.0, 0.0, 1.0],
                     [0.0, 1.0, 0.0],
-                    [0.0, 0.0, 0.0]
+                    [0.0, 0.0, 0.0],
                 ];
                 return new dA($M(data), 3, 2);
             },
@@ -58,7 +58,7 @@ vows.describe('n42 Denoised autoencoder test').addBatch({
                 for (var i = 0; i < 1000; i++) {
                     autoEncoder.train(0.1, 0.02);
                 }
-                console.log(autoEncoder.reconstruct($M([[1.0, 1.0, 0.0]])));
+                console.log(autoEncoder.reconstruct($M([[1.0, 1.0, 0.0], [0.0, 0.0, 1.0], [0.0, 1.0, 0.0]])));
             }
         },
         
