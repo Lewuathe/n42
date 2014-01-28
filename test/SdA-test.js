@@ -33,7 +33,7 @@ vows.describe('n42 Stacked autoencoder module').addBatch({
             
             'should receive 0.5': function (sda) {
                 sda.pretrain(0.3, 0.01, 1000);
-                sda.finetune(0.3, 100);
+                sda.finetune(0.3, 50);
                 var data = $M([
                     [1.0, 1.0, 0.0, 0.0],
                     [0.0, 0.0, 1.0, 1.0]
