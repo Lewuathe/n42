@@ -1,0 +1,10 @@
+{
+    "name": "n42",
+    "description": "n42 is deep learning framework for nodejs",
+    "version": "0.0.1",
+    "url": "http://lewuathe.com/n42",
+    "options": {
+        "outdir": "./docs",
+        "paths":["./lib"]
+    }
+}
