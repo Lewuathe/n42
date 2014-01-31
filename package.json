@@ -15,7 +15,8 @@
       "underscore": "~1.5.2",
       "sylvester": "~0.0.21",
       "gaussian": "~1.0.0",
-      "box-muller": "~0.0.1"
+      "box-muller": "~0.0.1",
+      "binomial-sampling": "~0.0.3"
   },
   "devDependencies" : {
       "vows" : "~0.7.0"
