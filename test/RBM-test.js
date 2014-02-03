@@ -70,8 +70,7 @@ vows.describe('n42 RBM  module').addBatch({
                     rbm.contrastiveDivergence(0.3, 1);
                 }
                 var v = $M([[1.0, 1.0, 1.0, 0.0, 0.0, 0.0],
-                            [0.0, 0.0, 0.0, 1.0, 1.0, 1.0],
-                            [1.0, 1.0, 0.0, 1.0, 0.0, 0.0]]);
+                            [0.0, 0.0, 0.0, 1.0, 1.0, 1.0]]);
                 assert.isNotNull(rbm.reconstruct(v));
             }
             
