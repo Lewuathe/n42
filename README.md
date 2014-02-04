@@ -7,9 +7,14 @@ n42 is the deep learning module for nodejs.
 
     $ npm install n42
 
+### Prerequisites
+
+    $ npm install sylvester
+
 ## Getting started 
 
 ```js
+    var sylveser = require('sylvester');
     var n42 = require('n42');
     
     // input data
