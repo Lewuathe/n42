@@ -14,7 +14,6 @@ n42 is the deep learning module for nodejs.
 ## Getting started 
 
 ```js
-    var sylveser = require('sylvester');
     var n42 = require('n42');
     
     // input data
