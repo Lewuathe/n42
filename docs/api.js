@@ -1,6 +1,7 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
+        "DBN",
         "LogisticsRegression",
         "SdA"
     ],
@@ -11,7 +12,7 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "n42",
             "name": "n42",
-            "description": "Logistics Regression module."
+            "description": "Deep Belief Nets"
         }
     ]
 } };

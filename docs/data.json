@@ -6,11 +6,20 @@
         "url": "http://lewuathe.com/n42"
     },
     "files": {
-        "lib/LogisticsRegression.js": {
-            "name": "lib/LogisticsRegression.js",
+        "lib/DBN.js": {
+            "name": "lib/DBN.js",
             "modules": {
                 "n42": 1
             },
+            "classes": {
+                "DBN": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/LogisticsRegression.js": {
+            "name": "lib/LogisticsRegression.js",
+            "modules": {},
             "classes": {
                 "LogisticsRegression": 1
             },
@@ -32,6 +41,7 @@
             "name": "n42",
             "submodules": {},
             "classes": {
+                "DBN": 1,
                 "LogisticsRegression": 1,
                 "SdA": 1
             },
@@ -40,13 +50,28 @@
             "tag": "module",
             "file": "lib/SdA.js",
             "line": 19,
-            "description": "Logistics Regression module.",
-            "is_constructor": 1,
+            "description": "Deep Belief Nets",
             "author": "Kai Sasaki",
-            "since": "2014/01/26"
+            "since": "2014/02/03",
+            "is_constructor": 1
         }
     },
     "classes": {
+        "DBN": {
+            "name": "DBN",
+            "shortname": "DBN",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "n42",
+            "namespace": "",
+            "file": "lib/DBN.js",
+            "line": 19,
+            "description": "Deep Belief Nets",
+            "is_constructor": 1
+        },
         "LogisticsRegression": {
             "name": "LogisticsRegression",
             "shortname": "LogisticsRegression",
@@ -79,6 +104,109 @@
         }
     },
     "classitems": [
+        {
+            "file": "lib/DBN.js",
+            "line": 29,
+            "description": "input data. This type is defined in sylvester library",
+            "itemtype": "property",
+            "name": "x",
+            "type": "Matrix",
+            "class": "DBN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/DBN.js",
+            "line": 36,
+            "description": "label data. This type is defined in sylvester library",
+            "itemtype": "property",
+            "name": "y",
+            "type": "Matrix",
+            "class": "DBN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/DBN.js",
+            "line": 43,
+            "description": "hidden layers which activations are sigmoid function",
+            "itemtype": "property",
+            "name": "sigmoidLayers",
+            "type": "Array",
+            "class": "DBN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/DBN.js",
+            "line": 53,
+            "description": "number of hidden layers",
+            "itemtype": "property",
+            "name": "nLayers",
+            "type": "int",
+            "class": "DBN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/DBN.js",
+            "line": 101,
+            "description": "Training hidden layers with unsupervised learning",
+            "itemtype": "method",
+            "name": "pretrain",
+            "params": [
+                {
+                    "name": "lr",
+                    "description": "learning rate",
+                    "type": "Float"
+                },
+                {
+                    "name": "k",
+                    "description": "the number of phase",
+                    "type": "Int"
+                },
+                {
+                    "name": "epochs",
+                    "description": "the number of times of running gradient decent",
+                    "type": "Int"
+                }
+            ],
+            "class": "DBN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/DBN.js",
+            "line": 129,
+            "description": "Training logistics regression algorithm which is on output layer",
+            "itemtype": "method",
+            "name": "train",
+            "params": [
+                {
+                    "name": "lr",
+                    "description": "learning rate",
+                    "type": "Float"
+                },
+                {
+                    "name": "epochs",
+                    "description": "the number of times of running gradient decent",
+                    "type": "Int"
+                }
+            ],
+            "class": "DBN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/DBN.js",
+            "line": 146,
+            "description": "Predict label with training data",
+            "itemtype": "method",
+            "name": "predict",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "input data",
+                    "type": "Matrix"
+                }
+            ],
+            "class": "DBN",
+            "module": "n42"
+        },
         {
             "file": "lib/LogisticsRegression.js",
             "line": 27,
@@ -250,7 +378,7 @@
         },
         {
             "file": "lib/SdA.js",
-            "line": 155,
+            "line": 154,
             "description": "Predict label with training data",
             "itemtype": "method",
             "name": "predict",

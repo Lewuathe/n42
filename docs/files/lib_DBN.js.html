@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib/LogisticsRegression.js - n42</title>
+    <title>lib/DBN.js - n42</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -88,17 +88,17 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: lib/LogisticsRegression.js</h1>
+                        <h1 class="file-heading">File: lib/DBN.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- *  Logistics Regression module. 
+ *  Deep Belief Nets
  *
  *  @module n42
- *  @constructor
+ *  @class  DBN
  *  @author Kai Sasaki
- *  @since  2014/01/26  
+ *  @since  2014/02/03
  *
  */
 
@@ -106,69 +106,135 @@ var Matrix = require(&#x27;sylvester&#x27;).Matrix;
 var Vector = require(&#x27;sylvester&#x27;).Vector;
 var utils  = require(&#x27;./utils.js&#x27;);
 
-/**
- *   LogisticsRegression module. 
- *   This module is used output layer.After trainging all hidden layers, 
- *   this module is tuned for fitting to training data
- *   
- *   @class LogisticsRegression
- *   @constructor
- *
- */
-function LogisticsRegression(input, label, nIn, nOut) {
-    var self = this;
+var HiddenLayer = require(&#x27;./HiddenLayer.js&#x27;);
+var RBM         = require(&#x27;./RBM.js&#x27;);
+var LogisticsRegression = require(&#x27;./LogisticsRegression.js&#x27;);
 
+/**
+ *  Deep Belief Nets
+ *
+ *  @class DBN
+ *  @constructor
+ */
+
+function DBN(input, label, nIns, hiddenLayerSizes, nOuts) {
+    var self = this;
+    
     /**
      *  input data. This type is defined in sylvester library
      *
-     *  @property input
+     *  @property x
      *  @type     Matrix
      */
-    self.input = input;
-
+    self.x = input;
     /**
      *  label data. This type is defined in sylvester library
-     *  
+     *
      *  @property y
      *  @type     Matrix
      */
     self.y = label;
-
     /**
-     *   weight parameter which is obtained after training
+     *  hidden layers which activations are sigmoid function
      *
-     *   @property W
-     *   @type     Matrix
+     *  @property sigmoidLayers
+     *  @type     Array
      */
-    self.W = Matrix.Zero(nIn, nOut);
+    self.sigmoidLayers = []
 
+    // Restricted Boltzmann machine layer
+    self.rbmLayers = [];
     /**
-     *   bias parameter which is obtained after training
+     *  number of hidden layers
      *
-     *   @property b
-     *   @type     Vector
+     *  @property nLayers
+     *  @type     int
      */
-    self.b = Vector.Zero(nOut);
+    self.nLayers = hiddenLayerSizes.length;
+    for (var layerIndex = 0; layerIndex &lt; self.nLayers; layerIndex++) {
+        
+        // Select input size
+        var inputSize;
+        if (layerIndex == 0) {
+            inputSize = nIns;
+        } else {
+            inputSize = hiddenLayerSizes[layerIndex-1];
+        }
+
+        var layerInput;
+        // Select input object of this layer
+        if (layerIndex == 0) {
+            layerInput = self.x;
+        } else {
+            layerInput = self.sigmoidLayers[layerIndex-1].sampleHGivenV();
+        }
+
+        var sigmoidLayer = new HiddenLayer(layerInput,
+                                           inputSize,
+                                           hiddenLayerSizes[layerIndex],
+                                           utils.sigmoid);
+
+        self.sigmoidLayers.push(sigmoidLayer);
+        
+        // Constrcut Restricted Boltzmann machine layer
+        var rbmLayer = new RBM(layerIndex,
+                               inputSize,
+                               hiddenLayerSizes[layerIndex],
+                               sigmoidLayer.W,
+                               sigmoidLayer.b);
+        self.rbmLayers.push(rbmLayer);
+    }
+
+    var lastIndex = self.sigmoidLayers.length-1;
+    self.logLayer = new LogisticsRegression(self.sigmoidLayers[lastIndex].sampleHGivenV,
+                                            self.y,
+                                            hiddenLayerSizes[lastIndex],
+                                            nOuts);
 }
 
 /**
- *   Training logistics regression algorithm
+ *   Training hidden layers with unsupervised learning
+ *   
+ *   @method pretrain
+ *   @param  lr {float} learning rate
+ *   @param  k  {int} the number of phase
+ *   @param  epochs {int} the number of times of running gradient decent
+ */
+
+DBN.prototype.pretrain = function(lr, k, epochs) {
+    var self = this;
+    // Training each layer by using Restricted boltzmann machine with unsupervised learning
+
+    for (var layerIndex = 0; layerIndex &lt; self.nLayers; layerIndex++) {
+        var layerInput;
+        if (layerIndex == 0) {
+            layerInput = self.x;
+        } else {
+            layerInput = self.sigmoidLayers[layerIndex-1].sampleHGivenV(layerIndex);
+        }
+
+        var rbm = self.rbmLayers[layerIndex];
+        for (var i = 0; i &lt; epochs; i++) {
+            rbm.contrastiveDivergence(lr, k, layerInput);
+        }
+    }
+}
+
+/**
+ *   Training logistics regression algorithm which is on output layer
  *   @method train
  *   @param  lr {float} learning rate
- *   @param  l2Reg {float} regularization parameter
- *   @param  input {Matrix} input data (option)
+ *   @param  epochs {int} the number of times of running gradient decent
  */
-LogisticsRegression.prototype.train = function(lr, l2Reg, input) {
+
+DBN.prototype.finetune = function(lr, epochs) {
     var self = this;
-    self.x = (input != undefined)? input : self.input
-    var rowValues = self.x.x(self.W);
-    var probYGivenX = utils.softmax(utils.plusBias(rowValues, self.b));
-    var dY = self.y.subtract(probYGivenX);
-
-    self.W = self.W.add(self.x.transpose().x(dY).x(lr).subtract(self.W.x(l2Reg).x(lr)));
-    self.b = self.b.add(utils.mean(dY, 0));
-
-    return true;
+    var lastIndex = self.sigmoidLayers.length-1;
+    var layerInput = self.sigmoidLayers[lastIndex].sampleHGivenV();
+    for (var i = 0; i &lt; epochs; i++) {
+        self.logLayer.train(lr, 0.01, layerInput);
+        lr *= 0.95;
+    }
 }
 
 /**
@@ -177,12 +243,21 @@ LogisticsRegression.prototype.train = function(lr, l2Reg, input) {
  *   @method predict
  *   @param  x {Matrix} input data
  */
-LogisticsRegression.prototype.predict = function(x) {
+
+DBN.prototype.predict = function(x) {
     var self = this;
-    return utils.softmax(utils.plusBias(x.x(self.W), self.b));
+    var layerInput = x;
+
+    for (var layerIndex = 0; layerIndex &lt; self.nLayers; layerIndex++) {
+        var sigmoidLayer = self.sigmoidLayers[layerIndex];
+        layerInput = sigmoidLayer.output(layerInput);
+    }
+
+    return self.logLayer.predict(layerInput);
 }
 
-module.exports = LogisticsRegression;
+
+module.exports = DBN;
     </pre>
 </div>
 

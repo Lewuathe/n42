@@ -41,6 +41,8 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/DBN.html">DBN</a></li>
+            
                 <li><a href="../classes/LogisticsRegression.html">LogisticsRegression</a></li>
             
                 <li><a href="../classes/SdA.html">SdA</a></li>
@@ -91,7 +93,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- *  Stacked denoised auto encode
+ *  Stacked denoised auto encoder
  *
  *  @module n42
  *  @class  SdA
@@ -237,7 +239,6 @@ SdA.prototype.finetune = function(lr, epochs) {
     var self = this;
     var lastIndex = self.sigmoidLayers.length-1;
     var layerInput = self.sigmoidLayers[lastIndex].sampleHGivenV();
-
     for (var i = 0; i &lt; epochs; i++) {
         self.logLayer.train(lr, 0.01, layerInput);
         lr *= 0.95;
