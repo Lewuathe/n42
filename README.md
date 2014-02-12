@@ -58,6 +58,15 @@ console.log(sda.predict(data));
  
 ```
 
+## Algorithms
+
+| Class | Implemented algorithm |
+|:-------|:----------|
+| NN | Newral Network |
+| LogisticsRegression | Logistics Regression |
+| SdA | Stacked denoised Autoencoder |
+| DBN | Deep Belief Nets |
+
 ## API Docs
 
 [n42 API Doc](http://lewuathe.com/n42/apidocs/index.html)
