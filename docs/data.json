@@ -26,6 +26,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "lib/NN.js": {
+            "name": "lib/NN.js",
+            "modules": {},
+            "classes": {
+                "NN": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "lib/SdA.js": {
             "name": "lib/SdA.js",
             "modules": {},
@@ -43,6 +52,7 @@
             "classes": {
                 "DBN": 1,
                 "LogisticsRegression": 1,
+                "NN": 1,
                 "SdA": 1
             },
             "fors": {},
@@ -85,6 +95,21 @@
             "file": "lib/LogisticsRegression.js",
             "line": 15,
             "description": "LogisticsRegression module. \nThis module is used output layer.After trainging all hidden layers, \nthis module is tuned for fitting to training data",
+            "is_constructor": 1
+        },
+        "NN": {
+            "name": "NN",
+            "shortname": "NN",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "n42",
+            "namespace": "",
+            "file": "lib/NN.js",
+            "line": 17,
+            "description": "Newral Network",
             "is_constructor": 1
         },
         "SdA": {
@@ -172,7 +197,7 @@
         },
         {
             "file": "lib/DBN.js",
-            "line": 129,
+            "line": 130,
             "description": "Training logistics regression algorithm which is on output layer",
             "itemtype": "method",
             "name": "train",
@@ -193,7 +218,7 @@
         },
         {
             "file": "lib/DBN.js",
-            "line": 146,
+            "line": 147,
             "description": "Predict label with training data",
             "itemtype": "method",
             "name": "predict",
@@ -287,6 +312,128 @@
                 }
             ],
             "class": "LogisticsRegression",
+            "module": "n42"
+        },
+        {
+            "file": "lib/NN.js",
+            "line": 27,
+            "description": "input data. This type is defined in sylvester library",
+            "itemtype": "property",
+            "name": "input",
+            "type": "Matrix",
+            "class": "NN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/NN.js",
+            "line": 35,
+            "description": "input size",
+            "itemtype": "property",
+            "name": "nVisible",
+            "type": "int",
+            "class": "NN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/NN.js",
+            "line": 43,
+            "description": "hidden layer size",
+            "itemtype": "property",
+            "name": "nHidden",
+            "type": "int",
+            "class": "NN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/NN.js",
+            "line": 51,
+            "description": "label matrix",
+            "itemtype": "property",
+            "name": "label",
+            "type": "Matrix",
+            "class": "NN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/NN.js",
+            "line": 60,
+            "description": "weight parameter for first layer",
+            "itemtype": "property",
+            "name": "W1",
+            "type": "Matrix",
+            "class": "NN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/NN.js",
+            "line": 70,
+            "description": "weight parameter for second layer",
+            "itemtype": "property",
+            "name": "W2",
+            "type": "Matrix",
+            "class": "NN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/NN.js",
+            "line": 80,
+            "description": "bias parameter for hidden layer",
+            "itemtype": "property",
+            "name": "hBias",
+            "type": "Vector",
+            "class": "NN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/NN.js",
+            "line": 89,
+            "description": "bias parameter for visible layer",
+            "itemtype": "property",
+            "name": "vBias",
+            "type": "Vector",
+            "class": "NN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/NN.js",
+            "line": 114,
+            "description": "Training weight parameters with supervised learning",
+            "itemtype": "method",
+            "name": "train",
+            "params": [
+                {
+                    "name": "lr",
+                    "description": "learning rate",
+                    "type": "Float"
+                },
+                {
+                    "name": "input",
+                    "description": "input data (option)",
+                    "type": "Matrix"
+                },
+                {
+                    "name": "label",
+                    "description": "label data (option)",
+                    "type": "Matrix"
+                }
+            ],
+            "class": "NN",
+            "module": "n42"
+        },
+        {
+            "file": "lib/NN.js",
+            "line": 151,
+            "description": "Predict label with training data",
+            "itemtype": "method",
+            "name": "predict",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "input data",
+                    "type": "Matrix"
+                }
+            ],
+            "class": "NN",
             "module": "n42"
         },
         {

@@ -45,6 +45,8 @@
             
                 <li><a href="../classes/LogisticsRegression.html">LogisticsRegression</a></li>
             
+                <li><a href="../classes/NN.html">NN</a></li>
+            
                 <li><a href="../classes/SdA.html">SdA</a></li>
             
             </ul>
@@ -201,7 +203,7 @@ function DBN(input, label, nIns, hiddenLayerSizes, nOuts) {
  *   @param  epochs {int} the number of times of running gradient decent
  */
 
-DBN.prototype.pretrain = function(lr, k, epochs) {
+DBN.prototype.pretrain = function(lr, k, epochs, input) {
     var self = this;
     // Training each layer by using Restricted boltzmann machine with unsupervised learning
 
@@ -209,6 +211,7 @@ DBN.prototype.pretrain = function(lr, k, epochs) {
         var layerInput;
         if (layerIndex == 0) {
             layerInput = self.x;
+            layerInput = (input != undefined)? input: self.x;
         } else {
             layerInput = self.sigmoidLayers[layerIndex-1].sampleHGivenV(layerIndex);
         }

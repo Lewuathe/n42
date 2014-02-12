@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib/LogisticsRegression.js - n42</title>
+    <title>lib/NN.js - n42</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -90,101 +90,175 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: lib/LogisticsRegression.js</h1>
+                        <h1 class="file-heading">File: lib/NN.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- *  Logistics Regression module. 
+ *   Newral network
  *
- *  @module n42
- *  @constructor
- *  @author Kai Sasaki
- *  @since  2014/01/26  
+ *   @module n42
+ *   @class  NN
+ *   @author Kai Sasaki
+ *   @since  2014/02/12
  *
  */
 
 var Matrix = require(&#x27;sylvester&#x27;).Matrix;
 var Vector = require(&#x27;sylvester&#x27;).Vector;
 var utils  = require(&#x27;./utils.js&#x27;);
+var assert = require(&#x27;assert&#x27;);
+var generator = require(&#x27;box-muller&#x27;);
 
 /**
- *   LogisticsRegression module. 
- *   This module is used output layer.After trainging all hidden layers, 
- *   this module is tuned for fitting to training data
- *   
- *   @class LogisticsRegression
- *   @constructor
+ *  Newral Network
  *
+ *  @class NN
+ *  @constructor
  */
-function LogisticsRegression(input, label, nIn, nOut) {
+
+function NN(input, nVisible, nHidden, nOutput, label, W1, W2) {
     var self = this;
 
     /**
      *  input data. This type is defined in sylvester library
-     *
+     *  
      *  @property input
      *  @type     Matrix
      */
-    self.input = input;
+    self.input    = input;
 
-    /**
-     *  label data. This type is defined in sylvester library
-     *  
-     *  @property y
-     *  @type     Matrix
-     */
-    self.y = label;
-
-    /**
-     *   weight parameter which is obtained after training
+    /** 
+     *  input size
      *
-     *   @property W
-     *   @type     Matrix
+     *  @property  nVisible
+     *  @type      int
      */
-    self.W = Matrix.Zero(nIn, nOut);
+    self.nVisible = nVisible;
 
     /**
-     *   bias parameter which is obtained after training
+     *  hidden layer size
      *
-     *   @property b
-     *   @type     Vector
+     *  @property  nHidden
+     *  @type      int
      */
-    self.b = Vector.Zero(nOut);
+    self.nHidden  = nHidden;
+
+    /**
+     *  label matrix
+     *
+     *  @property  label
+     *  @type      Matrix
+     */
+    self.label    = label;
+
+    
+    /**
+     *  weight parameter for first layer
+     *
+     *  @property  W1
+     *  @type      Matrix
+     */
+    // Initialize weight1 parameter
+    self.W1     = (W1 != undefined)? W1 : Matrix.Random(nVisible, nHidden);
+
+    
+    /**
+     *   weight parameter for second layer
+     *
+     *   @property  W2
+     *   @type      Matrix
+     */
+    // Initialize weight2 parameter
+    self.W2     = (W2 != undefined)? W2 : Matrix.Random(nHidden, nOutput);
+
+
+    /**
+     *   bias parameter for hidden layer
+     *
+     *   @property  hBias
+     *   @type      Vector
+     */
+    // Initialize hidden bias parameters
+    self.hBias = Vector.Zero(nHidden);
+
+    /**
+     *  bias parameter for visible layer
+     *
+     *  @property  vBias
+     *  @type      Vector
+     */
+    // Initialize visual bias parameters
+    self.vBias = Vector.Zero(nOutput);
+
 }
 
-/**
- *   Training logistics regression algorithm
- *   @method train
- *   @param  lr {float} learning rate
- *   @param  l2Reg {float} regularization parameter
- *   @param  input {Matrix} input data (option)
- */
-LogisticsRegression.prototype.train = function(lr, l2Reg, input) {
+NN.prototype.getHiddenValues = function(input) {
     var self = this;
-    self.x = (input != undefined)? input : self.input
-    var rowValues = self.x.x(self.W);
-    var probYGivenX = utils.softmax(utils.plusBias(rowValues, self.b));
-    var dY = self.y.subtract(probYGivenX);
-
-    self.W = self.W.add(self.x.transpose().x(dY).x(lr).subtract(self.W.x(l2Reg).x(lr)));
-    self.b = self.b.add(utils.mean(dY, 0));
-
-    return true;
+    // Calculate plus weight
+    var rowValues = input.x(self.W1);
+    return utils.sigmoid(utils.plusBias(rowValues, self.hBias));
 }
 
+NN.prototype.getOutput = function(hidden) {
+    var self = this;
+    var rowValues = hidden.x(self.W2);
+    return utils.sigmoid(utils.plusBias(rowValues, self.vBias));
+}
+
+
 /**
- *   Predict label with training data
+ *   Training weight parameters with supervised learning
  *
- *   @method predict
- *   @param  x {Matrix} input data
+ *   @method train
+ *   @param  lr {float}  learning rate
+ *   @param  input {Matrix} input data (option)
+ *   @param  label {Matrix} label data (option)
  */
-LogisticsRegression.prototype.predict = function(x) {
+NN.prototype.train = function(lr, input, label) {
     var self = this;
-    return utils.softmax(utils.plusBias(x.x(self.W), self.b));
+    self.x     = (input != undefined)? input : self.input;
+    self.label = (label != undefined)? label : self.label;
+    
+    var x = self.x;
+    var y = self.getHiddenValues(x);
+    var z = self.getOutput(y);
+
+    var lH2 = self.label.subtract(z);
+    var sigma = lH2.x(self.W2.transpose());
+    var lH1 = [];
+    for (var i = 0; i &lt; sigma.rows(); i++) {
+        lH1.push([]);
+        for (var j = 0; j &lt; sigma.cols(); j++) {
+            lH1[i].push(sigma.e(i+1, j+1) * y.e(i+1, j+1) * (1 - y.e(i+1, j+1)));
+        }
+    }
+    lH1 = $M(lH1);
+    var lW1 = x.transpose().x(lH1);
+    var lW2 = y.transpose().x(lH2);
+
+    self.W1 = self.W1.add(lW1.x(lr));
+    self.W2 = self.W2.add(lW2.x(lr));
+
+    self.vBias = self.vBias.add(utils.mean(lH2, 0).x(lr));
+    self.hBias = self.hBias.add(utils.mean(lH1, 0).x(lr));
 }
 
-module.exports = LogisticsRegression;
+/**
+ *  Predict label with training data
+ *
+ *  @method  predict
+ *  @param   x {Matrix} input data
+ */
+NN.prototype.predict = function(x) {
+    var self = this;
+    var y = self.getHiddenValues(x);
+    var z = self.getOutput(y);
+    return z
+}
+
+
+module.exports = NN;
     </pre>
 </div>
 

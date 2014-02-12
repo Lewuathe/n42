@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>DBN - n42</title>
+    <title>NN - n42</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -90,7 +90,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>DBN Class</h1>
+                        <h1>NN Class</h1>
 <div class="box meta">
     
 
@@ -98,7 +98,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/lib_DBN.js.html#l19"><code>lib&#x2F;DBN.js:19</code></a>
+            Defined in: <a href="../files/lib_NN.js.html#l17"><code>lib&#x2F;NN.js:17</code></a>
         </div>
     
 
@@ -114,15 +114,15 @@
 
 
 <div class="box intro">
-    <p>Deep Belief Nets</p>
+    <p>Newral Network</p>
 
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_DBN" class="method item">
-    <h3 class="name"><code>DBN</code></h3>
+        <div id="method_NN" class="method item">
+    <h3 class="name"><code>NN</code></h3>
 
     
         <span class="paren">()</span>
@@ -153,7 +153,7 @@
             
         
         
-        <a href="../files/lib_DBN.js.html#l19"><code>lib&#x2F;DBN.js:19</code></a>
+        <a href="../files/lib_NN.js.html#l17"><code>lib&#x2F;NN.js:17</code></a>
         
         </p>
 
@@ -209,13 +209,6 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_pretrain">pretrain</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
                                 <a href="#method_train">train</a>
 
                                 
@@ -233,28 +226,56 @@
                     <ul class="index-list properties">
                         
                             <li class="index-item property">
-                                <a href="#property_nLayers">nLayers</a>
+                                <a href="#property_hBias">hBias</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_sigmoidLayers">sigmoidLayers</a>
+                                <a href="#property_input">input</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_x">x</a>
+                                <a href="#property_label">label</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_y">y</a>
+                                <a href="#property_nHidden">nHidden</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_nVisible">nVisible</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_vBias">vBias</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_W1">W1</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_W2">W2</a>
 
                                 
                                 
@@ -316,7 +337,7 @@
             
         
         
-        <a href="../files/lib_DBN.js.html#l147"><code>lib&#x2F;DBN.js:147</code></a>
+        <a href="../files/lib_NN.js.html#l151"><code>lib&#x2F;NN.js:151</code></a>
         
         </p>
 
@@ -363,139 +384,6 @@
 </div>
 
                 
-                    <div id="method_pretrain" class="method item">
-    <h3 class="name"><code>pretrain</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>lr</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>k</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>epochs</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/lib_DBN.js.html#l101"><code>lib&#x2F;DBN.js:101</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Training hidden layers with unsupervised learning</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">lr</code>
-                        <span class="type">Float</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>learning rate</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">k</code>
-                        <span class="type">Int</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the number of phase</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">epochs</code>
-                        <span class="type">Int</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the number of times of running gradient decent</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="method_train" class="method item">
     <h3 class="name"><code>train</code></h3>
 
@@ -511,7 +399,13 @@
             
                 <li class="arg">
                     
-                        <code>epochs</code>
+                        <code>input</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>label</code>
                     
                 </li>
             
@@ -544,7 +438,7 @@
             
         
         
-        <a href="../files/lib_DBN.js.html#l130"><code>lib&#x2F;DBN.js:130</code></a>
+        <a href="../files/lib_NN.js.html#l114"><code>lib&#x2F;NN.js:114</code></a>
         
         </p>
 
@@ -555,7 +449,7 @@
     </div>
 
     <div class="description">
-        <p>Training logistics regression algorithm which is on output layer</p>
+        <p>Training weight parameters with supervised learning</p>
 
     </div>
 
@@ -583,14 +477,30 @@
             
                 <li class="param">
                     
-                        <code class="param-name">epochs</code>
-                        <span class="type">Int</span>
+                        <code class="param-name">input</code>
+                        <span class="type">Matrix</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>the number of times of running gradient decent</p>
+                        <p>input data (option)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">label</code>
+                        <span class="type">Matrix</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>label data (option)</p>
 
                     </div>
 
@@ -615,9 +525,9 @@
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_nLayers" class="property item">
-    <h3 class="name"><code>nLayers</code></h3>
-    <span class="type">Int</span>
+                    <div id="property_hBias" class="property item">
+    <h3 class="name"><code>hBias</code></h3>
+    <span class="type">Vector</span>
 
     
 
@@ -638,7 +548,7 @@
             
         
         
-        <a href="../files/lib_DBN.js.html#l53"><code>lib&#x2F;DBN.js:53</code></a>
+        <a href="../files/lib_NN.js.html#l80"><code>lib&#x2F;NN.js:80</code></a>
         
         </p>
 
@@ -648,7 +558,7 @@
     </div>
 
     <div class="description">
-        <p>number of hidden layers</p>
+        <p>bias parameter for hidden layer</p>
 
     </div>
 
@@ -660,53 +570,8 @@
 </div>
 
                 
-                    <div id="property_sigmoidLayers" class="property item">
-    <h3 class="name"><code>sigmoidLayers</code></h3>
-    <span class="type">Array</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/lib_DBN.js.html#l43"><code>lib&#x2F;DBN.js:43</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>hidden layers which activations are sigmoid function</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_x" class="property item">
-    <h3 class="name"><code>x</code></h3>
+                    <div id="property_input" class="property item">
+    <h3 class="name"><code>input</code></h3>
     <span class="type">Matrix</span>
 
     
@@ -728,7 +593,7 @@
             
         
         
-        <a href="../files/lib_DBN.js.html#l29"><code>lib&#x2F;DBN.js:29</code></a>
+        <a href="../files/lib_NN.js.html#l27"><code>lib&#x2F;NN.js:27</code></a>
         
         </p>
 
@@ -750,8 +615,8 @@
 </div>
 
                 
-                    <div id="property_y" class="property item">
-    <h3 class="name"><code>y</code></h3>
+                    <div id="property_label" class="property item">
+    <h3 class="name"><code>label</code></h3>
     <span class="type">Matrix</span>
 
     
@@ -773,7 +638,7 @@
             
         
         
-        <a href="../files/lib_DBN.js.html#l36"><code>lib&#x2F;DBN.js:36</code></a>
+        <a href="../files/lib_NN.js.html#l51"><code>lib&#x2F;NN.js:51</code></a>
         
         </p>
 
@@ -783,7 +648,232 @@
     </div>
 
     <div class="description">
-        <p>label data. This type is defined in sylvester library</p>
+        <p>label matrix</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_nHidden" class="property item">
+    <h3 class="name"><code>nHidden</code></h3>
+    <span class="type">Int</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/lib_NN.js.html#l43"><code>lib&#x2F;NN.js:43</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>hidden layer size</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_nVisible" class="property item">
+    <h3 class="name"><code>nVisible</code></h3>
+    <span class="type">Int</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/lib_NN.js.html#l35"><code>lib&#x2F;NN.js:35</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>input size</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_vBias" class="property item">
+    <h3 class="name"><code>vBias</code></h3>
+    <span class="type">Vector</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/lib_NN.js.html#l89"><code>lib&#x2F;NN.js:89</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>bias parameter for visible layer</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_W1" class="property item">
+    <h3 class="name"><code>W1</code></h3>
+    <span class="type">Matrix</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/lib_NN.js.html#l60"><code>lib&#x2F;NN.js:60</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>weight parameter for first layer</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_W2" class="property item">
+    <h3 class="name"><code>W2</code></h3>
+    <span class="type">Matrix</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/lib_NN.js.html#l70"><code>lib&#x2F;NN.js:70</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>weight parameter for second layer</p>
 
     </div>
 
