@@ -1,6 +1,6 @@
 {
   "name": "n42",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description" : "Deep learning module for nodejs",
   "repository" : {
           "type" : "git",
