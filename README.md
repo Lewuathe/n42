@@ -69,7 +69,7 @@ console.log(sda.predict(data));
 
 ## API Docs
 
-[n42 API Doc](http://lewuathe.com/n42/apidocs/index.html)
+[n42 API Doc](http://www.lewuathe.com/n42/apidocs/index.html)
 
 ## LICENSE
 
