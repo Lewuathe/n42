@@ -62,7 +62,7 @@ console.log(sda.predict(data));
 
 | Class | Implemented algorithm |
 |:-------|:----------|
-| NN | Newral Network |
+| NN | Neural Network |
 | LogisticsRegression | Logistics Regression |
 | SdA | Stacked denoised Autoencoder |
 | DBN | Deep Belief Nets |
