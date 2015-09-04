@@ -49,6 +49,7 @@
         "n42": {
             "name": "n42",
             "submodules": {},
+            "elements": {},
             "classes": {
                 "DBN": 1,
                 "LogisticsRegression": 1,
@@ -128,6 +129,7 @@
             "is_constructor": 1
         }
     },
+    "elements": {},
     "classitems": [
         {
             "file": "lib/DBN.js",

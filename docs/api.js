@@ -15,6 +15,7 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "n42",
             "description": "Deep Belief Nets"
         }
-    ]
+    ],
+    "elements": []
 } };
 });
